@@ -13,6 +13,19 @@ Demo
 
 .. image:: https://user-images.githubusercontent.com/340676/34174717-ef21cee2-e50a-11e7-8310-e0c91c297ec0.gif
 
+Installation
+------------
+
+::
+
+    $ pip install --user -e .
+
+Or you can use lantern.py directly:
+
+::
+
+    $ python3 lantern/lantern.py
+
 Usage
 -----
 
