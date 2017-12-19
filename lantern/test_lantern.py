@@ -26,7 +26,7 @@ class DefaultReader:
 
 
 class OneByteAtATimeReader(DefaultReader):
-    """Reads one by of data as a time until the data depletes."""
+    """Reads one byte of data at a time until the data depletes."""
     async def read(self, n):
         return await super().read(1)
 

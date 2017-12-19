@@ -23,6 +23,11 @@ DEFAULT_PORT = 9999
 
 
 class Lantern:
+    """
+    The main class to represent Lantern. It carries current color and state.
+    It also knows how to react to commands. Should you need to add a command,
+    handle it here as well.
+    """
     def __init__(self):
         self._color = (0, 0, 0)
         self._active = False
@@ -41,6 +46,10 @@ class Lantern:
 
 
 class CommandProtocol:
+    """
+    This class knows how to encode and decode messages. It also contains the
+    registry of known messages.
+    """
     _registry: dict = dict()
 
     @staticmethod
@@ -67,7 +76,7 @@ class CommandProtocol:
 
 
 class Meta(type):
-    """This metaclass automatically registers a command."""
+    """This helper metaclass automatically registers a command."""
     def __new__(mcs, name, bases, class_dict):
         mcs = super().__new__(mcs, name, bases, class_dict)
         CommandProtocol.register(mcs)
@@ -120,6 +129,10 @@ class CommandColor(BaseCommand):
 
 
 class CommandTransport:
+    """
+    This class handles sending of reading of messages of the protocol. It can
+    reconstruct a message from the data even if it arrives one byte at a time.
+    """
     def __init__(self, reader, writer):
         self._reader = reader
         self._writer = writer
@@ -177,6 +190,9 @@ def hex_encode(string):
 
 
 class LanternServer:
+    """
+    Simple Lantern server simulation for testing purposes.
+    """
     def __init__(self, host, port, loop,
                  num_connections_to_serve=None,
                  commands=None):
@@ -237,6 +253,10 @@ def simple_server(host=DEFAULT_HOST, port=DEFAULT_PORT):
 
 
 class LanternClient:
+    """
+    Lantern client - handles the communication with the server and notifies
+    upon new messages.
+    """
     def __init__(self, host, port, loop,
                  num_connections_to_process=None,
                  on_command_callback=None):
@@ -301,6 +321,9 @@ def simple_client(host=DEFAULT_HOST, port=DEFAULT_PORT):
 
 
 class LanternRunner:
+    """
+    Helper class that when fed to google-fire makes it a nice CLI.
+    """
     def server(self, host=DEFAULT_HOST, port=DEFAULT_PORT):
         simple_server(host, port)
 
